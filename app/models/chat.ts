@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import User from '#models/user'
 
 export default class Chat extends BaseModel {
   @column({ isPrimary: true })
@@ -9,7 +11,10 @@ export default class Chat extends BaseModel {
   declare userId: number
 
   @column()
-  declare messages: any[] // You can use a custom type later if needed
+  declare messages: any
+
+  @belongsTo(() => User)
+  declare user: BelongsTo<typeof User>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
